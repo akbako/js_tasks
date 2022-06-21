@@ -4,8 +4,7 @@
   "description": "Выполненные задачи ",
   "main": "index.js",
   "scripts": {
-    "start": "serve -p 3000 ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "serve -p 3000"
   },
   "author": "",
   "license": "ISC",

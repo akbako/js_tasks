@@ -6,15 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
 
-    <title>Home page</title>
+    <title>Арифметика</title>
 </head>
 <body>
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
             <span class="fs-4">Welcome </span>
         </a>
 
@@ -26,27 +28,120 @@
     <section class="py-5 text-center ">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light">Калькулятор</h1>
+                <h1 class="fw-light">Арифметика</h1>
                 <p class="lead text-muted"></p>
             </div>
         </div>
     </section>
     <div class="py-5 ">
         <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col">
-                    <div class="card shadow-sm">
-
-                    </div>
+            <form class="row justify-content-center">
+                <div class="col-auto ">
+                    <span class="h2" id="input1"></span>
+                    <span class="h2 mx-2" id="inputOperator">+</span>
+                    <span class="h2" id="input2"></span>
+                </div>
+            </form>
+            <div class="row mt-4">
+                <div class="offset-4 col-md-4">
+                    <input type="number" class="form-control" id="inputResult"
+                           required
+                           onkeyup="onChangeInput(this)">
                 </div>
             </div>
+            <div class="row mt-4">
+                <div class="col-md-4 offset-4">
+                    <div class="btn btn-primary d-block" onclick="checkResult()">Проверить</div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6 offset-3">
+                    <div id="message_success" class="row mt-4" style="display: none">
+                        <div class="alert alert-success" role="alert">
+                            Правильно
+                        </div>
+                    </div>
+                    <div id="message_failed" class="row mt-4" style="display: none">
+                        <div class="alert alert-danger" role="alert">
+                            Эххх... Неправильно
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="/node_modules/jquery/dist/jquery.min.js" ></script>
-<script src="/node_modules/@popperjs/core/dist/cjs/popper.js" ></script>
-<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js" ></script>
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/@popperjs/core/dist/cjs/popper.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
+<script>
+    let possibleOperators = ['*', '+', '-'];
+    let input1 = document.getElementById('input1');
+    let input2 = document.getElementById('input2');
+    let inputOperator = document.getElementById('inputOperator');
+    let inputResult = document.getElementById('inputResult')
+
+    let message_failed = document.getElementById('message_failed')
+    let message_success = document.getElementById('message_success')
+    let dataForms = {
+        first: 0,
+        second: 0,
+        operator: '+',
+        resultId: 'plusResult',
+        result: '',
+    };
+
+    function generateRandomDigits() {
+        return Math.floor(Math.random() * 100);
+    }
+
+    function getRandomMathOperator() {
+        const randomIndex = Math.floor(Math.random() * possibleOperators.length);
+        return possibleOperators[randomIndex]
+    }
+
+    function nextGame() {
+        dataForms = {
+            ...dataForms,
+            first: generateRandomDigits(),
+            second: generateRandomDigits(),
+            operator: getRandomMathOperator()
+        }
+        dataForms.result = eval(dataForms.first + dataForms.operator + dataForms.second);
+
+        input1.innerHTML = dataForms.first;
+        input2.innerHTML = dataForms.second;
+        inputOperator.innerHTML = dataForms.operator;
+    }
+
+    function checkResult() {
+        if (parseInt(inputResult.value) === dataForms.result) {
+            showSuccessMessage();
+            nextGame();
+        } else {
+            showFailedMessage();
+        }
+        setTimeout(hideMessages, 1000)
+    }
+
+    function showSuccessMessage() {
+        message_success.style.display = 'block'
+    }
+
+    function showFailedMessage() {
+        message_failed.style.display = 'block'
+
+    }
+
+    function hideMessages() {
+        message_success.style.display = 'none'
+        message_failed.style.display = 'none'
+    }
+
+    nextGame()
+
+</script>
 </html>

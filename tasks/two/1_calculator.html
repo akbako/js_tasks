@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
 
     <title>Home page</title>
 </head>
@@ -14,7 +14,9 @@
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
             <span class="fs-4">Welcome </span>
         </a>
 
@@ -33,20 +35,127 @@
     </section>
     <div class="py-5 ">
         <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col">
-                    <div class="card shadow-sm">
-
-                    </div>
+            <form class="row g-3">
+                <div class="col-auto">
+                    <label for="inputPlus1" class="visually-hidden">First</label>
+                    <input type="number" class="form-control" id="inputPlus1"
+                           required
+                           data-field-section="plus"
+                           data-field-key="first"
+                           value="0"
+                           onkeyup="onChangeInput(this)">
                 </div>
-            </div>
+                <div class="col-auto">
+                    +
+                </div>
+                <div class="col-auto">
+                    <label for="inputPlus2" class="visually-hidden">Second</label>
+                    <input type="number" class="form-control" id="inputPlus2"
+                           required
+                           value="0"
+                           data-field-section="plus"
+                           data-field-key="second"
+                           onkeyup="onChangeInput(this)">
+                </div>
+                <div class="col-auto">
+                    <input type="text" readonly class="form-control-plaintext" id="plusResult" value="=">
+                </div>
+            </form>
+            <form class="row g-3 mt-2">
+                <div class="col-auto">
+                    <label for="inputPlus1" class="visually-hidden">First</label>
+                    <input type="number" class="form-control" id="inputMinus1"
+                           required
+                           value="0"
+                           data-field-section="minus"
+                           data-field-key="first"
+                           onkeyup="onChangeInput(this)">
+                </div>
+                <div class="col-auto">
+                    -
+                </div>
+                <div class="col-auto">
+                    <label for="inputPlus2" class="visually-hidden">Second</label>
+                    <input type="number" class="form-control" id="inputMinus2"
+                           required
+                           value="0"
+                           data-field-section="minus"
+                           data-field-key="second"
+                           onkeyup="onChangeInput(this)">
+                </div>
+                <div class="col-auto">
+                    <input type="text" readonly class="form-control-plaintext" id="minusResult" value="=">
+                </div>
+            </form>
+            <form class="row g-3 mt-2">
+                <div class="col-auto">
+                    <label for="inputPlus1" class="visually-hidden">First</label>
+                    <input type="number" class="form-control"
+                           required
+                           value="0"
+                           data-field-section="multiply"
+                           data-field-key="first"
+                           onkeyup="onChangeInput(this)">
+                </div>
+                <div class="col-auto">
+                    *
+                </div>
+                <div class="col-auto">
+                    <label for="inputPlus2" class="visually-hidden">Second</label>
+                    <input type="number" class="form-control"
+                           required
+                           value="0"
+                           data-field-section="multiply"
+                           data-field-key="second"
+                           onkeyup="onChangeInput(this)">
+                </div>
+                <div class="col-auto">
+                    <input type="text" readonly class="form-control-plaintext" id="multiplyResult" value="=">
+                </div>
+            </form>
         </div>
     </div>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="/node_modules/jquery/dist/jquery.min.js" ></script>
-<script src="/node_modules/@popperjs/core/dist/cjs/popper.js" ></script>
-<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js" ></script>
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/@popperjs/core/dist/cjs/popper.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
+<script>
+    let dataForms = {
+        plus: {
+            first: 0,
+            second: 0,
+            operator: '+',
+            resultId: 'plusResult',
+        },
+        minus: {
+            first: 0,
+            second: 0,
+            operator: '-',
+            resultId: 'minusResult',
+        },
+        multiply: {
+            first: 0,
+            second: 0,
+            operator: '*',
+            resultId: 'multiplyResult',
+        }
+    };
+
+    function onChangeInput(target) {
+        dataForms[target.dataset.fieldSection][target.dataset.fieldKey] = parseInt(target.value);
+        calculateResult()
+    }
+
+    function calculateResult() {
+        for (let key in Object.assign(dataForms)) {
+            let temp1 = dataForms[key]
+            let result = eval(temp1.first + temp1.operator + temp1.second)
+
+            document.getElementById(temp1.resultId).value = result
+        }
+    }
+</script>
 </html>
