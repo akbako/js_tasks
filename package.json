@@ -1,7 +1,7 @@
 {
   "name": "bee-lessons-html",
   "version": "1.0.0",
-  "description": "Выполненные задачи ",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "serve -p 3000"
