@@ -1,0 +1,21 @@
+{
+  "name": "bee-lessons-html",
+  "version": "1.0.0",
+  "description": "Выполненные задачи ",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve -p 3000 ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serve": "^13.0.2"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bootstrap": "^5.1.3",
+    "jquery": "^3.6.0",
+    "popper": "^1.0.1"
+  }
+}
